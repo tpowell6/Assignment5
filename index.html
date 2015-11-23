@@ -1,0 +1,375 @@
+<html>
+
+<head>
+	<script src="jquery-1.11.3.js"></script>
+	<link rel="stylesheet" type="text/css" href="animate.css">
+
+	<style>
+		#addNew {
+			display: none;
+			position: fixed;
+			width: 100%;
+			height: 100%;
+			margin-top: 1000px;
+			top: 0px;
+			background: rgba(0, 0, 0, .7);
+			transition: 1s;
+		}
+
+		#clockWrapper {
+			width: 300px;
+			height: 300px;
+			margin: auto;
+			border: 1px solid black;
+			border-radius: 150px;
+		}
+
+		.nums {
+			position: absolute;
+			top: 150px;
+			width: 290px;
+			text-align: right;
+		}
+
+		#n1 {
+			transform: rotate(-60deg);
+		}
+
+		#n2 {
+			transform: rotate(-30deg);
+		}
+
+		#n3 {
+			transform: rotate(0deg);
+		}
+
+		#n4 {
+			transform: rotate(30deg);
+		}
+
+		#n5 {
+			transform: rotate(60deg);
+		}
+
+		#n6 {
+			transform: rotate(90deg);
+		}
+
+		#n7 {
+			transform: rotate(120deg);
+		}
+
+		#n8 {
+			transform: rotate(150deg);
+		}
+
+		#n9 {
+			transform: rotate(180deg);
+		}
+
+		#n10 {
+			transform: rotate(210deg);
+		}
+
+		#n11 {
+			transform: rotate(240deg);
+		}
+
+		#n12 {
+			transform: rotate(270deg);
+		}
+
+		.needle {
+			margin-top: 150px;
+			position: absolute;
+			width: 300px;
+			line-height: 0px;
+		}
+
+		.needle span {
+			display: block;
+			width: auto;
+			margin-left: 140px;
+			text-align: left;
+		}
+
+		#hour span {
+			background-color: red;
+			max-width: 100px;
+			height: 2px;
+		}
+
+		#min span {
+			background-color: blue;
+			max-width: 120px;
+			height: 2px;
+		}
+
+		#secs span {
+			background-color: black;
+			max-width: 135px;
+			height: 1px;
+		}
+	</style>
+	<script>
+		function updateClock(zone) {
+			var date = new Date();
+			var h = date.getHours() % 12;
+			var m = date.getMinutes();
+			var s = date.getSeconds();
+			var hdeg = (h - 3) * 30 + 30 * zone;
+			var mdeg = (m - 15) * 6;
+			var sdeg = (s - 15) * 6;
+			document.getElementById("hour").style.transform = "rotate(" + hdeg + "deg)";
+			document.getElementById("min").style.transform = "rotate(" + mdeg + "deg)";
+			document.getElementById("secs").style.transform = "rotate(" + sdeg + "deg)";
+		}
+		function startUp() {
+			generateMyTimeZoneList();
+			setInterval("updateClock()", 1000);
+		}
+		function cancelTimeZone() {
+			document.getElementById("addNew").style.marginTop = "1000px";
+			setTimeout(addNewTZ_Aux1, 1000);
+		}
+		function addNewTZ() {
+			document.getElementById("addNew").style.display = "block";
+			setTimeout(addNewTZ_Aux, 0);
+		}
+		function addNewTZ_Aux() {
+			document.getElementById("addNew").style.marginTop = "0px";
+		}
+		function addNewTZ_Aux1() {
+			document.getElementById("addNew").style.display = "none";
+		}
+		function generateMyTimeZoneList() {
+			var outS = "";
+			outS += "<a href='javascript:TZSelected(-1)'> Current Location </a><br>";
+			outS += "<a href='javascript:addNewTZ()'>+ New </a>";
+			document.getElementById("placeList").innerHTML = outS;
+		}
+		function TZSelected(a) {
+			if (a == -1) {
+				updateClock(null);
+			}
+		}
+		function addTimeZone() {
+			var selected = $('#timeZones option:selected');
+			if (selected.val() == '-11:00') {
+				updateClock(20);
+				document.getElementById("Location").innerHTML = "<div style ='text-align: center'>Hawaii</div>";
+			}
+			if (selected.val() == '-10:00') {
+				updateClock(21);
+				document.getElementById("Location").innerHTML = "<div style ='text-align: center'>New Zealand</div>";
+			}
+			if (selected.val() == '-8:00') {
+				updateClock(23);
+				document.getElementById("Location").innerHTML = "<div style ='text-align: center'>California</div>";
+			}
+			if (selected.val() == '-7:00') {
+				updateClock(0);
+				document.getElementById("Location").innerHTML = "<div style ='text-align: center'>Phoenix</div>";
+			}
+			if (selected.val() == '-6:00') {
+				updateClock(1);
+				document.getElementById("Location").innerHTML = "<div style ='text-align: center'>Florida</div>";
+			}
+			if (selected.val() == '-5:00') {
+				updateClock(2);
+				document.getElementById("Location").innerHTML = "<div style ='text-align: center'>New York</div>";
+			}
+			if (selected.val() == '-4:00') {
+				updateClock(3);
+				document.getElementById("Location").innerHTML = "<div style ='text-align: center'>Brazil</div>";
+			}
+			if (selected.val() == '+3:00') {
+				updateClock(10);
+				document.getElementById("Location").innerHTML = "<div style ='text-align: center'>Sudan</div>";
+			}
+			if (selected.val() == '+2:00') {
+				updateClock(9);
+				document.getElementById("Location").innerHTML = "<div style ='text-align: center'>Egypt</div>";
+			}
+			if (selected.val() == '+6:00') {
+				updateClock(13);
+				document.getElementById("Location").innerHTML = "<div style ='text-align: center'>Bangladesh</div>";
+			}
+			if (selected.val() == '+1:00') {
+				updateClock(8);
+				document.getElementById("Location").innerHTML = "<div style ='text-align: center'>Belgium</div>";
+			}
+			if (selected.val() == '+8:00') {
+				updateClock(15);
+				document.getElementById("Location").innerHTML = "<div style ='text-align: center'>Malaysia</div>";
+			}
+			if (selected.val() == '+00:00') {
+				updateClock(7);
+				document.getElementById("Location").innerHTML = "<div style ='text-align: center; '>England</div>";
+			}
+		}
+		function background() {
+			if ($('input[name=bgColor]:checked').val() == "red") {
+				$("#clockWrapper").css("background-color", "red");
+			}
+			if ($('input[name=bgColor]:checked').val() == "purple") {
+				$("#clockWrapper").css("background-color", "purple");
+			}
+			if ($('input[name=bgColor]:checked').val() == "white") {
+				$("#clockWrapper").css("background-color", "white");
+			}
+			if ($('input[name=bgColor]:checked').val() == "yellow") {
+				$("#clockWrapper").css("background-color", "yellow");
+			}
+			if ($('input[name=bgColor]:checked').val() == "green") {
+				$("#clockWrapper").css("background-color", "green");
+			}
+		}
+		function hourColor() {
+			var selectedHand = $('#hourHand option:selected');
+			if (selectedHand.val() == "red") {
+				$("#hour span").css("background-color", "red");
+			}
+			if (selectedHand.val() == "white") {
+				$("#hour span").css("background-color", "white");
+			}
+			if (selectedHand.val() == "blue") {
+				$("#hour span").css("background-color", "blue");
+			}
+			if (selectedHand.val() == "orange") {
+				$("#hour span").css("background-color", "orange");
+			}
+			if (selectedHand.val() == "yellow") {
+				$("#hour span").css("background-color", "yellow");
+			}
+		}
+		function minuteColor() {
+			var selectedHand = $('#minuteHand option:selected');
+			if (selectedHand.val() == "red") {
+				$("#min span").css("background-color", "red");
+			}
+			if (selectedHand.val() == "white") {
+				$("#min span").css("background-color", "white");
+			}
+			if (selectedHand.val() == "blue") {
+				$("#min span").css("background-color", "blue");
+			}
+			if (selectedHand.val() == "orange") {
+				$("#min span").css("background-color", "orange");
+			}
+			if (selectedHand.val() == "yellow") {
+				$("#min span").css("background-color", "yellow");
+			}
+		}
+		function secondColor() {
+			var selectedHand = $('#secondHand option:selected');
+			if (selectedHand.val() == "red") {
+				$("#secs span").css("background-color", "red");
+			}
+			if (selectedHand.val() == "white") {
+				$("#secs span").css("background-color", "white");
+			}
+			if (selectedHand.val() == "blue") {
+				$("#secs span").css("background-color", "blue");
+			}
+			if (selectedHand.val() == "orange") {
+				$("#secs span").css("background-color", "orange");
+			}
+			if (selectedHand.val() == "yellow") {
+				$("#secs span").css("background-color", "yellow");
+			}
+		}
+	</script>
+</head>
+
+<body onload='startUp()'>
+
+	<div id="Location"></div>
+
+	<div id='clockWrapper' class="animated bounceInRight">
+		<div class='nums' id='n1'> I </div>
+		<div class='nums' id='n2'> II </div>
+		<div class='nums' id='n3'> III </div>
+		<div class='nums' id='n4'> IV </div>
+		<div class='nums' id='n5'> V </div>
+		<div class='nums' id='n6'> VI </div>
+		<div class='nums' id='n7'> VII </div>
+		<div class='nums' id='n8'> VIII </div>
+		<div class='nums' id='n9'> IX </div>
+		<div class='nums' id='n10'> X </div>
+		<div class='nums' id='n11'> XI </div>
+		<div class='nums' id='n12'> XII </div>
+
+		<div class='needle' id='hour'>
+			</span> <span> </div>
+    <div  class='needle' id='min'><span> </span> </div>
+		<div class='needle' id='secs'><span> </span></div>
+	</div>
+
+	<div id='placeList'> </div>
+
+	<div id="addNew">
+		<select id='timeZones'>
+			<option value='-11:00'> Hawaii (-11:00) </option>
+			<option value='-10:00'> New Zealand (-10:00) </option>
+			<option value="-8:00"> California(-8:00)</option>
+			<option value="-7:00" selected> Phoenix(-7:00)</option>
+			<option value="-6:00"> Florida(-6:00)</option>
+			<option value="-5:00"> New York(-5:00)</option>
+			<option value="-4:00"> Brazil(-4:00)</option>
+			<option value="+3:00"> Sudan(+3:00)</option>
+			<option value="+2:00"> Egypt(+2:00)</option>
+			<option value="+6:00"> Bangladesh(+6:00)</option>
+			<option value="+1:00"> Belgium(+1:00)</option>
+			<option value="+8:00"> Malaysia(+8:00)</option>
+			<option value="+00:00"> England(+00:00)</option>
+		</select>
+
+		<a href='javascript:addTimeZone()'> Add </a>
+		<a href='javascript:cancelTimeZone()'> Cancel </a>
+	</div>
+	<form class="animated rotateIn">
+		<span>Background Color: </span>
+		<input type="button" name="bgColor" value="Color" onClick="background()">
+		<input type="radio" name="bgColor" value="red"> Red
+		<input type="radio" name="bgColor" value="purple"> Purple
+		<input type="radio" name="bgColor" value="white"> White
+		<input type="radio" name="bgColor" value="yellow"> Yellow
+		<input type="radio" name="bgColor" value="green"> Green
+	</form>
+
+	<span>Hour Hand</span>
+	<select id='hourHand' onclick="hourColor()">
+		<option value="Colors" name="numColor">Pick a color</option>
+		<option value="red" name="numColor">Red</option>
+		<option value="white" name="numColor">White</option>
+		<option value="blue" name="numColor">Blue</option>
+		<option value="orange" name="numColor">Orange</option>
+		<option value="yellow" name="numColor">Yellow</option>
+	</select>
+	<br>
+
+	<span>Minute Hand</span>
+	<select id='minuteHand' onclick="minuteColor()">
+		<option value="Colors" name="numColor">Pick a color</option>
+		<option value="red" name="numColor">Red</option>
+		<option value="white" name="numColor">White</option>
+		<option value="blue" name="numColor">Blue</option>
+		<option value="orange" name="numColor">Orange</option>
+		<option value="yellow" name="numColor">Yellow</option>
+	</select>
+	<br>
+
+	<span>Second Hand</span>
+	<select id='secondHand' onclick="secondColor()">
+		<option value="Colors" name="numColor">Pick a color</option>
+		<option value="red" name="numColor">Red</option>
+		<option value="white" name="numColor">White</option>
+		<option value="blue" name="numColor">Blue</option>
+		<option value="orange" name="numColor">Orange</option>
+		<option value="yellow" name="numColor">Yellow</option>
+	</select>
+	<br>
+</body>
+
+</html>
